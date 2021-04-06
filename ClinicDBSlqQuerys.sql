@@ -123,3 +123,113 @@ CREATE TABLE dbo.Patient_Visit
     -- specify more columns here
 );
 GO
+-- Create a new table called 'Allergies' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Allergies', 'U') IS NOT NULL
+DROP TABLE dbo.Allergies
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Allergies
+(
+    --AllergiesId INT NOT NULL PRIMARY KEY, -- primary key column
+    PatientXKey [NVARCHAR](20) NOT NULL,
+    AllergyName [NVARCHAR](50) NOT NULL,
+    DiagnosisDate DATE NOT NULL,
+    CONSTRAINT fk_Pat_Aler FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)
+
+    
+);
+GO
+
+-- Create a new table called 'Vaccines' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Vaccines', 'U') IS NOT NULL
+DROP TABLE dbo.Vaccines
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Vaccines
+(
+    --VaccinesId INT NOT NULL PRIMARY KEY, -- primary key column
+    PatientXKey [NVARCHAR](20) NOT NULL,
+    VaccinesName [NVARCHAR](50) NOT NULL,
+    Application_Date DATE NOT NULL,
+    Vaccine_Booster_Date DATE NOT NULL,
+    CONSTRAINT fk_Pat_Vacc FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)    
+);
+GO
+
+-- Create a new table called 'BloodPressure' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.BloodPressure', 'U') IS NOT NULL
+DROP TABLE dbo.BloodPressure
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.BloodPressure
+(
+    --BloodPressureId INT NOT NULL PRIMARY KEY, -- primary key column
+      PatientXKey [NVARCHAR](20) NOT NULL,
+      Date_BloodPress DATE NOT NULL,
+      Systolic_Press INT NOT NULL,
+      Diastolic_Press INT NOT NULL,
+      Pulse INT NOT NULL,
+      Status_BloodPress [NVARCHAR](15),
+      CONSTRAINT fk_Pat_BloodP FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)              
+    
+);
+GO
+
+-- Create a new table called 'SugarLevel' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.SugarLevel', 'U') IS NOT NULL
+DROP TABLE dbo.SugarLevel
+GO
+---- Create the table in the specified schema
+CREATE TABLE dbo.SugarLevel
+(
+  --SugarLevelId INT NOT NULL PRIMARY KEY, -- primary key column
+     PatientXKey [NVARCHAR](20) NOT NULL,
+     Date_SugarLevel DATE NOT NULL,    
+     Sugar_Level INT NOT NULL,
+     Sugar_Level_Status [NVARCHAR](20) NOT NULL,
+     CONSTRAINT fk_Pat_SugLvl FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)                  
+);
+GO
+-- Create a new table called 'Recipes' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Recipes', 'U') IS NOT NULL
+DROP TABLE dbo.Recipes
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Recipes
+(
+    RecipesXKey INT NOT NULL PRIMARY KEY IDENTITY(1,1), -- primary key column
+    DoctorXKey [NVARCHAR](20) NOT NULL,
+    PatientXKey [NVARCHAR](20) NOT NULL,
+    Medicine_Name[NVARCHAR](50) NOT NULL,
+    Treatment_Dose [NVARCHAR](50) NOT NULL,
+     CONSTRAINT fk_Pat_Recip FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)                  
+    
+);
+GO
+
+-- Create a new table called 'Diagnosis' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Diagnosis', 'U') IS NOT NULL
+DROP TABLE dbo.Diagnosis
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Diagnosis
+(
+    --DiagnosisId INT NOT NULL PRIMARY KEY, -- primary key column
+     PatientXKey [NVARCHAR](20) NOT NULL,
+     DoctorXKey [NVARCHAR](20) NOT NULL,
+     Patient_VisitXKey INT NOT NULL,
+     Physical_Diagnosis_Exam [NVARCHAR](50) NOT  NULL,
+     Diagnosis_Description [NVARCHAR](60) NOT NULL,
+     CONSTRAINT fk_Pat_Diagn FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)                  
+    
+    
+);
+GO  
+
+
