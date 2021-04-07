@@ -233,3 +233,61 @@ CREATE TABLE dbo.Diagnosis
 GO  
 
 
+-- Create a new table called 'Laboratory_Test' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Laboratory_Test', 'U') IS NOT NULL
+DROP TABLE dbo.Laboratory_Test
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Laboratory_Test
+(
+    --Laboratory_TestId INT NOT NULL PRIMARY KEY, -- primary key column
+     PatientXKey [NVARCHAR](20) NOT NULL,
+     DoctorXKey [NVARCHAR](20) NOT NULL,
+     Lab_Date DATE NOT NULL,
+     Lab_Name [VARCHAR](30) NOT NULL,
+     Lab_Values INT NOT NULL,
+     Lab_Diagnosis [VARCHAR](50) NOT NULL,
+     CONSTRAINT fk_Pat_Lab FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)                       
+);
+GO
+
+-- Create a new table called 'Radiology_Test' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Radiology_Test', 'U') IS NOT NULL
+DROP TABLE dbo.Radiology_Test
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Radiology_Test
+(
+  --  Radiology_TestId INT NOT NULL PRIMARY KEY, -- primary key columns
+     PatientXKey [NVARCHAR](20) NOT NULL,
+     DoctorXKey [NVARCHAR](20) NOT NULL,
+     Xray_Date DATE NOT NULL,
+     Xray_Name [VARCHAR](30) NOT NULL,
+     Lab_Values INT NOT NULL,
+     Lab_Diagnosis [VARCHAR](50) NOT NULL,
+     CONSTRAINT fk_Pat_Xry FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)                       
+  
+    -- specify more columns here
+);
+GO
+-- Create a new table called 'Patient_Pathology' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Patient_Pathology', 'U') IS NOT NULL
+DROP TABLE dbo.Patient_Pathology
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Patient_Pathology
+(
+    --PathologyId INT NOT NULL PRIMARY KEY, -- primary key column
+   PatientXKey [NVARCHAR](20) NOT NULL,
+   Pathology_Date DATE,
+   Pathology_Name [NVARCHAR](30)  NOT NULL,
+   CONSTRAINT fk_Pat_Path FOREIGN KEY (PatientXKey)  REFERENCES Patient(PatientXKey)                       
+
+  
+    
+  
+);
+GO
